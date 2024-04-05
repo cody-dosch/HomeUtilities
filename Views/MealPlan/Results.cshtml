@@ -1,0 +1,16 @@
+﻿@model HomeUtilities.Models.MealPlan.MealPlanResults
+@{
+    ViewData["Title"] = "Meal Plan";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Meal Planning</h1>        
+            @foreach (var recipe in Model.Recipes)
+            {
+                <h1>@recipe.Title</h1>
+            }
+        </div>
+    </div>
+</div>
