@@ -17,14 +17,24 @@ namespace HomeUtilities.Controllers
             _spoonacularDAL = spoonacularDAL;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            var searchModel = new MealPlanSearchModel();
+
+            searchModel.AllTags = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>
+            {
+                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem { Text = "Test 1", Value = "Test 1" },
+                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem { Text = "Test 2", Value = "Test 2" },
+                new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem { Text = "Test 3", Value = "Test 3" }
+            };
+
+            return View(searchModel);
         }
 
         public async Task<IActionResult> GenerateMeals()
         {
-            var resultsModel = new MealPlanResults();
+            var resultsModel = new MealPlanSearchModel();
 
             var getMealsRequest = new SpoonacularDAL.Requests.GetRandomRecipesRequest
             {
@@ -32,7 +42,7 @@ namespace HomeUtilities.Controllers
             };
 
             var getMealsResponse = await _spoonacularDAL.GetRandomRecipes(getMealsRequest);
-            resultsModel.Recipes = getMealsResponse.Recipes;
+            resultsModel.Results = getMealsResponse.Recipes;
 
             return View("Results", resultsModel);
         }

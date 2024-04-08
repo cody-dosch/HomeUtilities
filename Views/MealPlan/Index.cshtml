@@ -1,13 +1,55 @@
-﻿@{
+﻿@model HomeUtilities.Models.MealPlan.MealPlanSearchModel
+@{
     ViewData["Title"] = "Meal Plan";
 }
 
+<script src="~/js/mealPlan.js" asp-append-version="true"></script>
+
 <div class="container">
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
             <h1>Meal Planning</h1>
             <form asp-controller="MealPlan" asp-action="GenerateMeals">
-                <button type="submit">Get Meals</button>    
+                <div class="row">
+                    <div class="col-md-2 col-sm-12 col-12">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.TotalRecipes)
+                            @Html.TextBoxFor(m => m.TotalRecipes, new { @class = "form-control", type = "number" })
+                        </div>
+                    </div>  
+                    <div class="col-md-2 col-sm-12 col-12">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.NumSavedMeals)
+                            @Html.TextBoxFor(m => m.NumSavedMeals, new { @class = "form-control", type = "number" })
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12 col-12">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.IncludedTags)
+                            @Html.DropDownListFor(m => m.IncludedTags, Model.AllTags, htmlAttributes: new
+                                {
+                                    @class = "js-included-tags form-select form-control",
+                                    @multiple = "multiple",
+                                    id = "IncludedTagsDropDownList"
+                                })
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12 col-12">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ExcludedTags)
+                            @Html.DropDownListFor(m => m.ExcludedTags, Model.AllTags, htmlAttributes: new
+                                {
+                                    @class = "js-excluded-tags form-select form-control",
+                                    @multiple = "multiple",
+                                    id = "ExcludedTagsDropDownList"
+                                })
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-12 col-12">
+                        <label>&nbsp;</label>
+                        <button type="submit" class="btn btn-primary btn-search">Go</button>
+                    </div>
+                </div>                
             </form>
         </div>
     </div>

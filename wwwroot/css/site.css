@@ -20,3 +20,30 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.navbar, .footer {
+    background-color: #135ebf!important;
+}
+
+.navbar a {
+    color: white!important;
+}
+
+.footer, .footer a {
+    color: white!important;
+}
+
+/* MEAL PLAN PAGE */
+.btn-search {
+    display: block;
+    width: 100%;
+}
+
+.select2-container {
+    width: 100%!important;
+}
+
+.select2-selection {
+    border: 1px solid #ced4da!important;
+    min-height: 38px!important;
+}

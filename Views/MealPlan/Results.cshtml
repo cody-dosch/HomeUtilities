@@ -1,4 +1,4 @@
-﻿@model HomeUtilities.Models.MealPlan.MealPlanResults
+﻿@model HomeUtilities.Models.MealPlan.MealPlanSearchModel
 @{
     ViewData["Title"] = "Meal Plan";
 }
@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-xs-12">
             <h1>Meal Planning</h1>        
-            @foreach (var recipe in Model.Recipes)
+            @foreach (var recipe in Model.Results)
             {
                 <h1>@recipe.Title</h1>
             }
