@@ -5,12 +5,40 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-xs-12">
-            <h1>Meal Planning</h1>        
-            @foreach (var recipe in Model.Results)
-            {
-                <h1>@recipe.Title</h1>
-            }
+        <div class="col-sm-12">
+            <h1>Meal Planning</h1> 
+            
+            <table class="table table-hover results-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        @* <th>Summary</th> *@
+                        <th>Dish Types</th>
+                        <th>Ready In</th>
+                        <th>Links</th>
+                    </tr>                   
+                </thead>
+                <tbody>
+                    @foreach (var recipe in Model.Results)
+                    {
+                        <tr class="recipe-result-row" onclick="window.location='@Url.Action("RecipeDetails", "MealPlan", new { spoonacularId = recipe.SpoonacularId })';">
+                            <td>@recipe.Title</td>
+                            <td>@recipe.DishTypes</td>
+                            @* <td>@Html.Raw(recipe.Summary)</td> *@
+                            <td>@string.Format("{0}", recipe.ReadyInMinutes != null ? $"{recipe.ReadyInMinutes} Minutes" : "Unavailable")</td>
+                            <td>
+                                <a href="@recipe.SourceUrl" target="_blank">Source</a>
+                                <a href="@recipe.ImageUrl" target="_blank">Image</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.HiddenFor(m => m.TotalRecipes)
+            @Html.HiddenFor(m => m.NumSavedMeals)
+            @Html.HiddenFor(m => m.IncludedTags)
+            @Html.HiddenFor(m => m.ExcludedTags)
+            <input type="hidden" value="false" id="RefreshResults" name="RefreshResults" />
         </div>
     </div>
 </div>

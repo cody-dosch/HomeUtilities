@@ -21,7 +21,9 @@ namespace HomeUtilities.Models.MealPlan
 
         public List<SelectListItem> AllTags { get; set; }
 
+        public bool RefreshResults { get; set; }
+
         // TODO: Make this a unified list of recipes that will take a generic shape, so that our shared recipes can be in the same list
-        public List<RecipeDTO> Results { get; set; }
+        public List<RecipeSummaryModel> Results { get; set; }
     }
 }

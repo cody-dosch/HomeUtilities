@@ -47,3 +47,7 @@ body {
     border: 1px solid #ced4da!important;
     min-height: 38px!important;
 }
+
+.results-table tr:hover {
+    cursor: pointer;
+}

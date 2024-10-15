@@ -17,12 +17,12 @@
                             @Html.TextBoxFor(m => m.TotalRecipes, new { @class = "form-control", type = "number" })
                         </div>
                     </div>  
-                    <div class="col-md-2 col-sm-12 col-12">
+                    @* <div class="col-md-2 col-sm-12 col-12">
                         <div class="form-group">
                             @Html.LabelFor(m => m.NumSavedMeals)
                             @Html.TextBoxFor(m => m.NumSavedMeals, new { @class = "form-control", type = "number" })
                         </div>
-                    </div>
+                    </div> *@
                     <div class="col-md-3 col-sm-12 col-12">
                         <div class="form-group">
                             @Html.LabelFor(m => m.IncludedTags)
@@ -45,6 +45,7 @@
                                 })
                         </div>
                     </div>
+                    <input type="hidden" value="true" id="RefreshResults" name="RefreshResults" />
                     <div class="col-md-2 col-sm-12 col-12">
                         <label>&nbsp;</label>
                         <button type="submit" class="btn btn-primary btn-search">Go</button>

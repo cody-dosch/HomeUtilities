@@ -1,8 +1,10 @@
 using HomeUtilities.Models;
 using HomeUtilities.Models.MealPlan;
+using HomeUtilities.Session;
 using Microsoft.AspNetCore.Mvc;
 using SpoonacularDAL;
 using System.Diagnostics;
+using System.Text;
 
 namespace HomeUtilities.Controllers
 {
@@ -32,19 +34,66 @@ namespace HomeUtilities.Controllers
             return View(searchModel);
         }
 
-        public async Task<IActionResult> GenerateMeals()
+        public async Task<IActionResult> GenerateMeals(MealPlanSearchModel searchModel)
         {
-            var resultsModel = new MealPlanSearchModel();
+            var searchResults = HttpContext.Session.GetObject<List<RecipeSummaryModel>>(SessionKeys.RecipeResults);
 
+            // If we already have search results, and we don't want to refresh them - return the existing results
+            if (searchResults != null && !searchModel.RefreshResults)
+            {
+                searchModel.Results = searchResults;
+                return View("Results", searchModel);
+            }              
+
+            // Otherwise, make the spoonacular request to get new search results
             var getMealsRequest = new SpoonacularDAL.Requests.GetRandomRecipesRequest
             {
-                Quantity = 1
+                Quantity = searchModel.TotalRecipes
             };
 
             var getMealsResponse = await _spoonacularDAL.GetRandomRecipes(getMealsRequest);
-            resultsModel.Results = getMealsResponse.Recipes;
+            searchModel.Results = getMealsResponse.Recipes.Select(r => new RecipeSummaryModel
+            {
+                SpoonacularId = r.Id,
+                Title = r.Title,
+                ReadyInMinutes = r.ReadyInMinutes,
+                SourceUrl = r.SourceUrl,
+                ImageUrl = r.ImageUrl,
+                Summary = r.Summary,
+                DishTypes = string.Join(',', r.DishTypes)
+            }
+            ).ToList();
 
-            return View("Results", resultsModel);
+            // Store the new results in the session
+            HttpContext.Session.SetObject(SessionKeys.RecipeResults, searchModel.Results);         
+
+            return View("Results", searchModel);
+        }
+
+        public async Task<IActionResult> RecipeDetails(int? spoonacularId)
+        {
+            var recipeDetailsViewModel = new RecipeDetailsViewModel();
+
+            // 1. Pull the recipe from Spoonacular
+            var recipe = await _spoonacularDAL.GetRecipeInformation(spoonacularId);
+
+            if (recipe == null)
+            {
+                // TODO: Error
+            }
+
+            recipeDetailsViewModel.SpoonacularId = recipe.Id;
+            recipeDetailsViewModel.Title = recipe.Title;
+            recipeDetailsViewModel.Summary = recipe.Summary;
+            recipeDetailsViewModel.DishTypes = string.Join(',', recipe.DishTypes);
+            recipeDetailsViewModel.ReadyInMinutes = recipe.ReadyInMinutes;
+            recipeDetailsViewModel.Instructions = recipe.AnalyzedInstructions?.FirstOrDefault()?.Steps?.Select(i => i?.Step)?.ToList() ?? new List<string>();
+            recipeDetailsViewModel.Ingredients = recipe.Ingredients?.Select(i => i.Original)?.ToList() ?? new List<string>();
+            recipeDetailsViewModel.ImageUrl = recipe.ImageUrl;
+            recipeDetailsViewModel.SourceUrl = recipe.SourceUrl;
+
+            // 2. Return the recipe details view
+            return View("RecipeDetails", recipeDetailsViewModel);
         }
     }
 }
