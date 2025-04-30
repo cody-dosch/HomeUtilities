@@ -33,6 +33,12 @@ body {
     color: white!important;
 }
 
+.actions-row .col-sm-12 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 /* MEAL PLAN PAGE */
 .btn-search {
     display: block;
@@ -48,6 +54,31 @@ body {
     min-height: 38px!important;
 }
 
+/* MEAL PLAN RESULTS PAGE */
+
 .results-table tr:hover {
     cursor: pointer;
+}
+
+.recipe-title:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* MEAL DETAILS PAGE */
+.saved-recipe-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+}
+
+.heart-icon {
+    width: 100%; 
+    height: 100%;
 }

@@ -35,6 +35,15 @@
             </div>
         </nav>
     </header>
+
+    <div class="container-fluid">
+        <div class="row actions-row">
+            <div class="col-sm-12">
+                @await RenderSectionAsync("Actions", required: false)
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

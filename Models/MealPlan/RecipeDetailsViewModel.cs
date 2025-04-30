@@ -15,6 +15,8 @@ namespace HomeUtilities.Models.MealPlan
 
         public string DishTypes { get; set; }
 
+        public decimal? Servings { get; set; }
+
         public int? ReadyInMinutes { get; set; }
 
         public List<string> Instructions { get; set; }
@@ -24,5 +26,7 @@ namespace HomeUtilities.Models.MealPlan
         public string ImageUrl { get; set; }
 
         public string SourceUrl { get; set; }
+
+        public bool IsSaved { get; set; }
     }
 }

@@ -3,6 +3,17 @@
     ViewData["Title"] = $"Recipe Details - {Model.Title}";
 }
 
+@section Actions {
+    <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("GenerateMeals", "MealPlan")';">Back</button>
+    <div class="saved-recipe-button" data-recipe-id="@Model.SpoonacularId">
+        <svg class="heart-icon" data-is-saved="@(Model.IsSaved ? "true" : "false")" viewBox="0 0 24 24">
+            <path fill="@((Model.IsSaved) ? "red" : "none")" stroke="black" stroke-width="1.5" d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+        </svg>
+    </div>
+}
+
+<script src="~/js/mealPlan.js" asp-append-version="true"></script>
+
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
@@ -17,7 +28,17 @@
                     <h3>Summary:</h3>
                     @Html.Raw(Model.Summary)
                 </div>
-            </div>           
+            </div>     
+            <div class="row recipe-servings-row">
+                <div class="col-sm-6">
+                    <h3>Servings:</h3>
+                    <p>@Model.Servings</p>
+                </div>
+                <div class="col-sm-6">
+                    <h3>Time to Prepare:</h3>
+                    <p>@Model.ReadyInMinutes Minutes</p>
+                </div>
+            </div>
             <div class="row recipe-ingredients-and-instructions-row">
                 <div class="col-sm-6">
                     <h3>Ingredients:</h3>
@@ -37,7 +58,16 @@
                         }
                     </ol>
                 </div>
-            </div>           
+            </div>   
+            <div class="row recipe-footer">
+                <div class="col-sm-12">
+                    @if (!string.IsNullOrWhiteSpace(Model.DishTypes))
+                    {
+                        <p><b>Tags: </b>@(string.Join(',', Model.DishTypes))</p>
+                    }
+                    <p><b>Source Url: </b> <a href="@Model.SourceUrl" target="_blank">@Model.SourceUrl</a></p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,10 +1,9 @@
-using SpoonacularDAL;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<SpoonacularDAL.SpoonacularDAL, SpoonacularDAL.SpoonacularDAL>();
+builder.Services.AddScoped<SpoonacularDAL.SpoonacularDAL>();
+builder.Services.AddSingleton<UserDataService>();
 
 builder.Services.AddDistributedMemoryCache();
 

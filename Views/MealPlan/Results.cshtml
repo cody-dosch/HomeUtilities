@@ -3,6 +3,10 @@
     ViewData["Title"] = "Meal Plan";
 }
 
+@section Actions {
+    <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("Index", "MealPlan")';">Back</button>
+}
+
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
@@ -21,8 +25,8 @@
                 <tbody>
                     @foreach (var recipe in Model.Results)
                     {
-                        <tr class="recipe-result-row" onclick="window.location='@Url.Action("RecipeDetails", "MealPlan", new { spoonacularId = recipe.SpoonacularId })';">
-                            <td>@recipe.Title</td>
+                        <tr class="recipe-result-row">
+                            <td class="recipe-title" onclick="window.location='@Url.Action("RecipeDetails", "MealPlan", new { spoonacularId = recipe.SpoonacularId })';">@recipe.Title</td>
                             <td>@recipe.DishTypes</td>
                             @* <td>@Html.Raw(recipe.Summary)</td> *@
                             <td>@string.Format("{0}", recipe.ReadyInMinutes != null ? $"{recipe.ReadyInMinutes} Minutes" : "Unavailable")</td>
@@ -39,6 +43,10 @@
             @Html.HiddenFor(m => m.IncludedTags)
             @Html.HiddenFor(m => m.ExcludedTags)
             <input type="hidden" value="false" id="RefreshResults" name="RefreshResults" />
+
+            <div class="text-center">
+                <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("GenerateMoreMeals", "MealPlan")';">Load More</button>
+            </div>
         </div>
     </div>
 </div>
