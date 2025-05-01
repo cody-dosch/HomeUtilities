@@ -41,3 +41,7 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
+
+# Ignore Development appsettings.json which stores API Keys
+appsettings.Development.json
+/appsettings.Development.json
