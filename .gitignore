@@ -43,7 +43,8 @@ msbuild.err
 msbuild.wrn
 
 # Ignore Development appsettings.json which stores API Keys
-/appsettings.Development.json
+/HomeUtilties/appsettings.Development.json
 
 # Ignore the App_Data folder because it holds user specific data files that should be persisted.
 /HomeUtilities/App_Data
+/HomeUtilities/appsettings.Development.json
