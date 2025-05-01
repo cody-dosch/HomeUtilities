@@ -44,3 +44,4 @@ msbuild.wrn
 
 # Ignore Development appsettings.json which stores API Keys
 /appsettings.Development.json
+/HomeUtilities/App_Data
