@@ -1,0 +1,40 @@
+**/.classpath
+**/.dockerignore
+**/.env
+**/.git
+**/.gitignore
+**/.project
+**/.settings
+**/.toolstarget
+**/.vs
+**/.vscode
+**/*.*proj.user
+**/*.dbmdl
+**/*.jfm
+**/azds.yaml
+**/charts
+**/docker-compose*
+**/Dockerfile*
+**/node_modules
+**/npm-debug.log
+LICENSE
+README.md
+!**/.gitignore
+!.git/HEAD
+!.git/config
+!.git/packed-refs
+!.git/refs/heads/**
+
+# Exclude bin and obj folders for the main project
+HomeUtilities/bin/**
+HomeUtilities/obj/**
+
+# Allow bin and obj folders for dependent projects to be included
+!HomeUtilities.Common/bin/**
+!HomeUtilities.Common/obj/**
+!SpoonacularDAL/bin/**
+!SpoonacularDAL/obj/**
+
+# Globally exclude bin and obj *unless* specifically included above
+**/bin/**
+**/obj/**

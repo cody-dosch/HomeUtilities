@@ -7,6 +7,7 @@
     <UserSecretsId>9c3cff58-6730-464f-9f2c-86c451b60a83</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,12 +15,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HomeUtilities.Common\HomeUtilities.Common.csproj" />
-    <ProjectReference Include="..\SpoonacularDAL\SpoonacularDAL.csproj" />
+    <Folder Include="App_Data\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <ProjectReference Include="..\HomeUtilities.Common\HomeUtilities.Common.csproj" />
+    <ProjectReference Include="..\SpoonacularDAL\SpoonacularDAL.csproj" />
   </ItemGroup>
 
 </Project>

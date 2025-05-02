@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeUtilities", "HomeUtilities.csproj", "{F8D54584-1EBF-44EC-8FC1-5DE58304AF1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeUtilities", "HomeUtilities\HomeUtilities.csproj", "{F8D54584-1EBF-44EC-8FC1-5DE58304AF1F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeUtilities.Common", "..\HomeUtilities.Common\HomeUtilities.Common.csproj", "{AC51926C-391E-4095-8F67-EFCE7265F698}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeUtilities.Common", "HomeUtilities.Common\HomeUtilities.Common.csproj", "{AC51926C-391E-4095-8F67-EFCE7265F698}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpoonacularDAL", "..\SpoonacularDAL\SpoonacularDAL.csproj", "{9901DC42-0F26-4B28-B664-3B2185F7F315}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpoonacularDAL", "SpoonacularDAL\SpoonacularDAL.csproj", "{9901DC42-0F26-4B28-B664-3B2185F7F315}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
