@@ -28,5 +28,7 @@ namespace HomeUtilities.Models.MealPlan
         public string SourceUrl { get; set; }
 
         public bool IsSaved { get; set; }
+
+        public bool IsSelected { get; set; }
     }
 }

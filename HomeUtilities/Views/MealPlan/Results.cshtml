@@ -4,7 +4,13 @@
 }
 
 @section Actions {
-    <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("Index", "MealPlan")';">Back</button>
+    <div class="back-button-container">
+        <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("Index", "MealPlan")';">Back</button>
+    </div>
+    <div class="action-buttons-container">
+        <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("SavedRecipes", "MealPlan")';">Saved Recipes</button>
+        <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("SelectedRecipes", "MealPlan")';">Selected Recipes</button>
+    </div>
 }
 
 <div class="container">

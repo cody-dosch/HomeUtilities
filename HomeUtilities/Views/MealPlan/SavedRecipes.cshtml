@@ -1,0 +1,58 @@
+﻿@using HomeUtilities.Models.MealPlan
+
+@model List<RecipeSummaryModel>
+@{
+    ViewData["Title"] = "Saved Recipes";
+}
+
+@section Actions {
+    <div class="back-button-container">
+        <button type="button" class="btn btn-primary" onclick="window.history.back(); return false;">Back</button>
+    </div>
+
+    <div class="action-buttons-container">
+
+    </div>
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Saved Recipes</h1> 
+            
+            <table class="table table-hover results-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        @* <th>Summary</th> *@
+                        <th>Dish Types</th>
+                        <th>Ready In</th>
+                        <th>Links</th>
+                    </tr>                   
+                </thead>
+                <tbody>
+                    @if (Model?.Any() ?? false)
+                    {
+                        foreach (var recipe in Model)
+                        {
+                            <tr class="recipe-result-row">
+                                <td class="recipe-title" onclick="window.location='@Url.Action("RecipeDetails", "MealPlan", new { spoonacularId = recipe.SpoonacularId })';">@recipe.Title</td>
+                                <td>@recipe.DishTypes</td>
+                                @* <td>@Html.Raw(recipe.Summary)</td> *@
+                                <td>@string.Format("{0}", recipe.ReadyInMinutes != null ? $"{recipe.ReadyInMinutes} Minutes" : "Unavailable")</td>
+                                <td>
+                                    <a href="@recipe.SourceUrl" target="_blank">Source</a>
+                                    <a href="@recipe.ImageUrl" target="_blank">Image</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

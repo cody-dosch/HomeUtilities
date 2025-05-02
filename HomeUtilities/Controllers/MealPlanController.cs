@@ -2,6 +2,7 @@ using HomeUtilities.Models;
 using HomeUtilities.Models.MealPlan;
 using HomeUtilities.Session;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 using SpoonacularDAL;
 using System.Diagnostics;
 using System.Text;
@@ -49,6 +50,7 @@ namespace HomeUtilities.Controllers
             return View(searchModel);
         }
 
+        [HttpPost]
         public async Task<IActionResult> GenerateMeals(MealPlanSearchModel searchModel)
         {
             // If we already have search results, and we don't want to refresh them - return the existing results
@@ -88,9 +90,10 @@ namespace HomeUtilities.Controllers
             searchModel.RefreshResults = false;
             HttpContext.Session.SetObject(SessionKeys.RecipeSearchParameters, searchModel);
 
-            return View("Results", searchModel);
+            return RedirectToAction("Results", searchModel);
         }
 
+        [HttpPost]
         public async Task<IActionResult> GenerateMoreMeals()
         {
             // Use the existing search parameters to search for more recipes and append them to the current search results
@@ -123,9 +126,18 @@ namespace HomeUtilities.Controllers
             // Store the new results in the session
             HttpContext.Session.SetObject(SessionKeys.RecipeResults, searchModel.Results);
 
+            return RedirectToAction("Results", searchModel);
+        }
+
+        [HttpGet]
+        public IActionResult Results()
+        {
+            var searchModel = HttpContext.Session.GetObject<MealPlanSearchModel>(SessionKeys.RecipeSearchParameters) ?? new MealPlanSearchModel();
+            searchModel.Results = HttpContext.Session.GetObject<List<RecipeSummaryModel>>(SessionKeys.RecipeResults) ?? new List<RecipeSummaryModel>();
             return View("Results", searchModel);
         }
 
+        [HttpGet]
         public async Task<IActionResult> RecipeDetails(int? spoonacularId)
         {
             var recipeDetailsViewModel = new RecipeDetailsViewModel();
@@ -150,22 +162,18 @@ namespace HomeUtilities.Controllers
             recipeDetailsViewModel.SourceUrl = recipe.SourceUrl;
 
             // Check if the recipe is in our saved recipes
-            var savedRecipes = await _userDataService.GetSavedRecipesAsync();
-            recipeDetailsViewModel.IsSaved = savedRecipes.Contains(recipe.Id);
+            var savedRecipeIds = await _userDataService.GetSavedRecipesAsync();
+            recipeDetailsViewModel.IsSaved = savedRecipeIds.Contains(recipe.Id);
+
+            // Check if the recipe is in our selected recipes
+            var selectedRecipeIds = HttpContext.Session.GetObject<List<int?>>(SessionKeys.SelectedRecipes) ?? new List<int?>();
+            recipeDetailsViewModel.IsSelected = selectedRecipeIds.Contains(recipe.Id);
 
             // 2. Return the recipe details view
             return View("RecipeDetails", recipeDetailsViewModel);
         }
 
-        public async Task<IActionResult> RecipeDetailsBack()
-        {
-            // Return to the results page with RefreshResults set to false
-            var searchModel = HttpContext.Session.GetObject<MealPlanSearchModel>(SessionKeys.RecipeSearchParameters) ?? new MealPlanSearchModel();
-            searchModel.RefreshResults = false;
-
-            // 2. Return the recipe details view
-            return await GenerateMeals(searchModel);
-        }
+        #region Saved Recipes
 
         public async Task<IActionResult> SaveRecipe([FromQuery] int recipeId)
         {
@@ -178,5 +186,110 @@ namespace HomeUtilities.Controllers
             var success = await _userDataService.RemoveSavedRecipeAsync(recipeId);
             return new JsonResult(success);
         }
+
+        public async Task<IActionResult> SavedRecipes()
+        {
+            // Get the list of saved recipe ids from the user data
+            var savedRecipeIds = await _userDataService.GetSavedRecipesAsync();
+
+            var savedRecipes = new List<RecipeSummaryModel>();
+
+            // Fetch the details for each saved recipe
+            if (savedRecipeIds?.Any() ?? false) {
+                foreach (var savedRecipeId in savedRecipeIds)
+                {
+                    var recipe = await _spoonacularDAL.GetRecipeInformation(savedRecipeId);
+
+                    if (recipe == null)
+                        continue;
+
+                    savedRecipes.Add(new RecipeSummaryModel
+                    {
+                        SpoonacularId = recipe.Id,
+                        Title = recipe.Title,
+                        ReadyInMinutes = recipe.ReadyInMinutes,
+                        SourceUrl = recipe.SourceUrl,
+                        ImageUrl = recipe.ImageUrl,
+                        Summary = recipe.Summary,
+                        DishTypes = string.Join(',', recipe.DishTypes)
+                    });
+                }
+            }
+
+            return View("SavedRecipes", savedRecipes);
+        }
+
+        #endregion
+
+        #region Selected Recipes
+
+        public async Task<IActionResult> SelectRecipe([FromQuery] int recipeId)
+        {
+            bool success = false;
+
+            // Add the recipe to the selected recipes in Session.
+            var selectedRecipeIds = HttpContext.Session.GetObject<List<int?>>(SessionKeys.SelectedRecipes) ?? new List<int?>();
+
+            if (!selectedRecipeIds?.Contains(recipeId) ?? true)
+                selectedRecipeIds.Add(recipeId);
+
+            HttpContext.Session.SetObject(SessionKeys.SelectedRecipes, selectedRecipeIds);
+
+            success = true;
+
+            return new JsonResult(success);
+        }
+
+        public async Task<IActionResult> UnselectRecipe([FromQuery] int recipeId)
+        {
+            bool success = false;
+
+            // Remove the recipe from the selected recipes in Session.
+            var selectedRecipeIds = HttpContext.Session.GetObject<List<int?>>(SessionKeys.SelectedRecipes) ?? new List<int?>();
+
+            if (selectedRecipeIds?.Contains(recipeId) ?? false)
+                selectedRecipeIds.Remove(recipeId);
+
+            HttpContext.Session.SetObject(SessionKeys.SelectedRecipes, selectedRecipeIds);
+
+            success = true;
+
+            return new JsonResult(success);
+        }
+
+        public async Task<IActionResult> SelectedRecipes()
+        {
+            // Get the list of saved recipe ids from the user data
+            var selectedRecipeIds = HttpContext.Session.GetObject<List<int?>>(SessionKeys.SelectedRecipes) ?? new List<int?>();
+
+            var selectedRecipes = new List<RecipeSummaryModel>();
+
+            // Fetch the details for each saved recipe
+            if (selectedRecipeIds?.Any() ?? false)
+            {
+                foreach (var selectedRecipeId in selectedRecipeIds)
+                {
+                    var recipe = await _spoonacularDAL.GetRecipeInformation(selectedRecipeId);
+
+                    if (recipe == null)
+                        continue;
+
+                    selectedRecipes.Add(new RecipeSummaryModel
+                    {
+                        SpoonacularId = recipe.Id,
+                        Title = recipe.Title,
+                        ReadyInMinutes = recipe.ReadyInMinutes,
+                        SourceUrl = recipe.SourceUrl,
+                        ImageUrl = recipe.ImageUrl,
+                        Summary = recipe.Summary,
+                        DishTypes = string.Join(',', recipe.DishTypes)
+                    });
+                }
+            }
+
+            return View("SelectedRecipes", selectedRecipes);
+        }
+
+        #endregion
     }
 }

@@ -33,7 +33,17 @@ body {
     color: white!important;
 }
 
-.actions-row .col-sm-12 {
+.actions-row {
+    margin-bottom: 15px;
+}
+
+    .actions-row .col-sm-12 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+.action-buttons-container {
     display: flex;
     align-items: center;
     gap: 10px;
