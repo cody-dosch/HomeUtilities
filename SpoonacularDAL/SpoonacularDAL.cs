@@ -42,6 +42,8 @@ namespace SpoonacularDAL
 
                 var requestUrl = $"{_apiBaseUrl}/recipes/random?apiKey={_apiKey}&number={request.Quantity}";
 
+                _logger.LogInformation($"Request Url: {requestUrl}");
+
                 if (request.IncludedTags?.Any() ?? false)
                     requestUrl += $"&include-tags={string.Join(',', request.IncludedTags)}";
 

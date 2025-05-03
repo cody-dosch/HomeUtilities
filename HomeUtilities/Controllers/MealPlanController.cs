@@ -71,7 +71,10 @@ namespace HomeUtilities.Controllers
             };
 
             var getMealsResponse = await _spoonacularDAL.GetRandomRecipes(getMealsRequest);
-            searchModel.Results = getMealsResponse.Recipes.Select(r => new RecipeSummaryModel
+            if (!getMealsResponse?.Success ?? true)
+                _logger.LogError($"Unable to get recipes from Spoonacular. {getMealsResponse?.Message}");
+
+            searchModel.Results = getMealsResponse?.Recipes?.Select(r => new RecipeSummaryModel
             {
                 SpoonacularId = r.Id,
                 Title = r.Title,
@@ -81,7 +84,7 @@ namespace HomeUtilities.Controllers
                 Summary = r.Summary,
                 DishTypes = string.Join(',', r.DishTypes)
             }
-            ).ToList();
+            )?.ToList() ?? new List<RecipeSummaryModel>();
 
             // Store the new search parameters and results in the session
             HttpContext.Session.SetObject(SessionKeys.RecipeResults, searchModel.Results);
@@ -111,7 +114,10 @@ namespace HomeUtilities.Controllers
             };
 
             var getMealsResponse = await _spoonacularDAL.GetRandomRecipes(getMealsRequest);
-            searchModel.Results.AddRange(getMealsResponse.Recipes.Select(r => new RecipeSummaryModel
+            if (!getMealsResponse?.Success ?? true)
+                _logger.LogError($"Unable to get recipes from Spoonacular. {getMealsResponse?.Message}");
+
+            searchModel.Results.AddRange(getMealsResponse?.Recipes?.Select(r => new RecipeSummaryModel
             {
                 SpoonacularId = r.Id,
                 Title = r.Title,
@@ -121,7 +127,7 @@ namespace HomeUtilities.Controllers
                 Summary = r.Summary,
                 DishTypes = string.Join(',', r.DishTypes)
             }
-            ).ToList());
+            )?.ToList() ?? new List<RecipeSummaryModel>());
 
             // Store the new results in the session
             HttpContext.Session.SetObject(SessionKeys.RecipeResults, searchModel.Results);
