@@ -30,3 +30,5 @@ In order to give it a friendly local DNS name:
 		- Forget your Wifi network connection and reconnect in order to flush DNS cache
 		- Most importantly, may need to change your network's DNS setting on your phone to Manual, and specify your
 		  raspberry pi's IP address as first in the list. You can keep the others, e.g. 2001:558:feed::1
+		  
+	NOTE: You'll still need to include the port using the friendly hostname, e.g. http://homeutilities.cd:8080
