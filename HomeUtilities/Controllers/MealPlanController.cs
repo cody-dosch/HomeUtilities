@@ -65,7 +65,7 @@ namespace HomeUtilities.Controllers
             // Otherwise, make the spoonacular request to get new search results
             var getMealsRequest = new SpoonacularDAL.Requests.GetRandomRecipesRequest
             {
-                Quantity = searchModel.TotalRecipes,
+                Quantity = searchModel.TotalRecipes ?? 0,
                 IncludedTags = searchModel.IncludedTags,
                 ExcludedTags = searchModel.ExcludedTags
             };
@@ -93,7 +93,7 @@ namespace HomeUtilities.Controllers
             searchModel.RefreshResults = false;
             HttpContext.Session.SetObject(SessionKeys.RecipeSearchParameters, searchModel);
 
-            return RedirectToAction("Results", searchModel);
+            return RedirectToAction("Results");
         }
 
         [HttpPost]
@@ -108,7 +108,7 @@ namespace HomeUtilities.Controllers
             // Otherwise, make the spoonacular request to get new search results
             var getMealsRequest = new SpoonacularDAL.Requests.GetRandomRecipesRequest
             {
-                Quantity = searchModel.TotalRecipes,
+                Quantity = searchModel.TotalRecipes ?? 0,
                 IncludedTags = searchModel.IncludedTags,
                 ExcludedTags = searchModel.ExcludedTags
             };
@@ -132,7 +132,7 @@ namespace HomeUtilities.Controllers
             // Store the new results in the session
             HttpContext.Session.SetObject(SessionKeys.RecipeResults, searchModel.Results);
 
-            return RedirectToAction("Results", searchModel);
+            return RedirectToAction("Results");
         }
 
         [HttpGet]

@@ -25,10 +25,17 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MealPlan" asp-action="Index">Meal Planning</a>
+                        <li class="nav-item has-submenu">
+                            <a class="nav-link" href="#" id="mealPlanDropdown" data-toggle="collapse" data-target="#mealPlanSubMenu" aria-expanded="false" aria-controls="mealPlanSubMenu">
+                                Meal Planning
+                            </a>
+                            <ul class="collapse submenu" id="mealPlanSubMenu">
+                                <li><a class="nav-link text-dark" asp-area="" asp-controller="MealPlan" asp-action="Index">Generate New</a></li>
+                                <li><a class="nav-link text-dark" asp-area="" asp-controller="MealPlan" asp-action="SavedRecipes">Saved Recipes</a></li>
+                                <li><a class="nav-link text-dark" asp-area="" asp-controller="MealPlan" asp-action="SelectedRecipes">Selected Recipes</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -52,11 +59,12 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - HomeUtilities
+            &copy; 2025 - HomeUtilities
         </div>
     </footer>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/header.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -25,10 +25,10 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h1>@Model.Title</h1>            
+            <h1 class="recipe-title">@Model.Title</h1>            
             <div class="row recipe-image-row">
                 <div class="col-sm-12">
-                    <img src="@Model.ImageUrl" class="recipe-image" />
+                    <img src="@Model.ImageUrl" class="recipe-image img-fluid" />
                 </div>
             </div>         
             <div class="row recipe-summary-row">
@@ -73,7 +73,7 @@
                     {
                         <p><b>Tags: </b>@(string.Join(',', Model.DishTypes))</p>
                     }
-                    <p><b>Source Url: </b> <a href="@Model.SourceUrl" target="_blank">@Model.SourceUrl</a></p>
+                    <p class="source-url"><b>Source Url: </b> <a href="@Model.SourceUrl" target="_blank">@Model.SourceUrl</a></p>
                 </div>
             </div>
         </div>

@@ -75,6 +75,14 @@ body {
     cursor: pointer;
 }
 
+@media (max-width: 576px) {
+    th.ready-in-minutes-header, td.ready-in-minutes-cell, th.dish-types-header, td.dish-types-cell {
+        display: none;
+    }
+}
+
+
+
 /* MEAL DETAILS PAGE */
 .saved-recipe-button {
     display: inline-flex;
@@ -91,4 +99,147 @@ body {
 .heart-icon {
     width: 100%; 
     height: 100%;
+}
+
+.recipe-title {
+    font-weight: bold;
+}
+
+.recipe-image-row, .recipe-summary-row {
+    margin-bottom: 15px;
+}
+
+.source-url {
+    word-break: break-word;
+}
+
+/* HEADER STYLING */
+/* General styling for submenu toggles */
+.navbar-nav .has-submenu > a {
+    position: relative; /* For absolute positioning of the arrow */
+    padding-right: 1.5rem; /* Space for the arrow */
+}
+
+    .navbar-nav .has-submenu > a::after {
+        content: '\25BE'; /* Down arrow character */
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: transform 0.2s ease-in-out;
+    }
+
+.navbar-nav .has-submenu.show > a::after {
+    transform: translateY(-50%) rotate(-180deg); /* Rotate arrow when open */
+}
+
+.navbar-nav .submenu {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+    .navbar-nav .submenu li a {
+        display: block;
+        padding: 0.5rem 1.5rem;
+        text-decoration: none;
+        color: #333; /* Adjust color as needed */
+    }
+
+/* Mobile Accordion Styles */
+@media (max-width: 767px) {
+    .navbar-nav .submenu {
+        display: none !important; /* Initially hide submenus on mobile */
+        padding-left: 1rem; /* Indent submenu items */
+    }
+
+        .navbar-nav .submenu.show {
+            display: block !important; /* Show submenu when toggled */
+        }
+
+    /* Adjust arrow position for mobile */
+    .navbar-nav .has-submenu > a {
+        align-items: center; /* Vertically align text and arrow */
+        justify-content: space-between; /* Push text to the left, arrow to the right */
+        padding-right: 1rem; /* Reduce padding as space is managed by flexbox */
+    }
+
+        .navbar-nav .has-submenu > a::after {
+            content: '\25BE'; /* Down arrow character */
+            position: absolute; /* Use absolute positioning for transform */
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: 0; /* Reset margin */
+        }
+
+    .navbar-nav .submenu li a:hover {
+        background-color: #135eb0; /* Adjust hover color */
+    }
+}
+
+/* Desktop Dropdown Styles */
+@media (min-width: 768px) {
+    .navbar-nav .has-submenu {
+        position: relative; /* Needed for containing the submenu */
+    }
+
+    .navbar-nav .submenu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        padding: 0.5rem 0;
+        min-width: 200px;
+        color: black !important;
+        opacity: 0; /* Initially hidden */
+        visibility: hidden;
+        transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+    }
+
+    .navbar-nav .has-submenu:hover > .submenu {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .navbar-nav .has-submenu > a {
+        padding-right: 1rem;
+    }
+
+        .navbar-nav .has-submenu > a::after {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            margin-left: 0.255em;
+            vertical-align: 0.255em;
+            content: "";
+            border-top: 0.3em solid;
+            border-right: 0.3em solid transparent;
+            border-bottom: 0;
+            border-left: 0.3em solid transparent;
+            float: right;
+            transform: rotate(0);
+            transition: transform 0.2s ease-in-out;
+        }
+
+    .navbar-nav .has-submenu:hover > a::after {
+        transform: rotate(-180deg);
+    }
+
+    .nav-link.text-dark {
+        color: black !important;
+    }
+
+    .navbar-nav .submenu li a:hover {
+        background-color: #f0f0f0;
+    }
+
+    /* Add a slight "gap" to maintain hover state */
+    .navbar-nav .has-submenu .submenu {
+        padding-top: 0.2rem; /* Adjust this value */
+        margin-top: -0.2rem; /* Pull the submenu up slightly */
+    }
 }

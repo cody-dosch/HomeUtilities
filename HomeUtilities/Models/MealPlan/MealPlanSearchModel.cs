@@ -8,7 +8,7 @@ namespace HomeUtilities.Models.MealPlan
     public class MealPlanSearchModel
     {
         [Display(Name = "Total Meals")]
-        public int TotalRecipes { get; set; }
+        public int? TotalRecipes { get; set; }
 
         [Display(Name = "Saved Meals")]
         public int NumSavedMeals { get; set; }

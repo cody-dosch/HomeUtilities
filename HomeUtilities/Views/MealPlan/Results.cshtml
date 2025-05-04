@@ -23,8 +23,8 @@
                     <tr>
                         <th>Title</th>
                         @* <th>Summary</th> *@
-                        <th>Dish Types</th>
-                        <th>Ready In</th>
+                        <th class="dish-types-header">Dish Types</th>
+                        <th class="ready-in-minutes-header">Ready In</th>
                         <th>Links</th>
                     </tr>                   
                 </thead>
@@ -33,9 +33,9 @@
                     {
                         <tr class="recipe-result-row">
                             <td class="recipe-title" onclick="window.location='@Url.Action("RecipeDetails", "MealPlan", new { spoonacularId = recipe.SpoonacularId })';">@recipe.Title</td>
-                            <td>@recipe.DishTypes</td>
+                            <td class="dish-types-cell">@recipe.DishTypes</td>
                             @* <td>@Html.Raw(recipe.Summary)</td> *@
-                            <td>@string.Format("{0}", recipe.ReadyInMinutes != null ? $"{recipe.ReadyInMinutes} Minutes" : "Unavailable")</td>
+                            <td class="ready-in-minutes-cell">@string.Format("{0}", recipe.ReadyInMinutes != null ? $"{recipe.ReadyInMinutes} Minutes" : "Unavailable")</td>
                             <td>
                                 <a href="@recipe.SourceUrl" target="_blank">Source</a>
                                 <a href="@recipe.ImageUrl" target="_blank">Image</a>
